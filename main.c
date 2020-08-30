@@ -29,7 +29,7 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-uint16_t counter=0,counter1=0,lap;
+uint16_t counter=0,counter1=0,lap,nutnhan;
 volatile uint64_t time_set=5000,time=5000,time_change;
 volatile uint16_t phathien1=0;
 volatile uint16_t phathien2=0;
@@ -96,21 +96,29 @@ void sangden()
 		counter=0;
 		out_pin4(1);
 		phathien1=0;
-		phathien2=0;		
+		phathien2=0;
+		nutnhan=0;
 }
+	if(nutnhan==1)
+	{
+			counter=0;	
+	}
 	}
 
-	else
+	else if ((counter > time_set) && nutnhan==0)
 	{
 		counter=0;
 		out_pin4(0);
 	}
+
 }
 
 
 	void set_time()
 	{
-		if(counter<time_set)
+		if(counter<time_set )
+		{
+		if(time_change==0)
 		{
 		if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_6) == 0 ) 
 		{ 
@@ -137,13 +145,16 @@ void sangden()
 		}
 		else
 		{
+		nutnhan=1;	
 		HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_4);	
 		HAL_Delay(2);
+		counter=0;
 		}			
 	}
 }	
+		}
 		
-		if(time_change==1)
+		else if(time_change==1)
 		{
 		if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_6) == 0 ) 
 		{ 
