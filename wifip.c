@@ -507,6 +507,7 @@ void wifiprocess(void)
 			time_count_setup = 0;
 			cycle_count_reset_touch = 0;
 			count_update = 0;
+		
 		 if(old_pad2 ==0)
 		 {
 			 old_pad2=1;
@@ -514,6 +515,7 @@ void wifiprocess(void)
 				{
 					State_switch_1 = 1;
 				}
+					mcu_dp_bool_update(DPID_SWITCH_1,State_switch_1); // update trang thai len phan mem		
 			if(countdown_1==0 )
 			{
 				State_countdown_1=60;
